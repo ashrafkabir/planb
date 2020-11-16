@@ -135,12 +135,14 @@ class NewsListState extends State<NewsList> {
                         )
                       ],
                     ),
-                    //SizedBox(height: height/100,), //no need for extra space here.
+                    SizedBox(
+                      height: height / 100,
+                    ), //no need for extra space here.
 
                     Padding(
                       // this allows a padding around the post image.
                       padding: EdgeInsets.symmetric(
-                          horizontal: width / 20, vertical: height / 100),
+                          horizontal: width / 20, vertical: height / 200),
                       child: Image.asset(
                         'assets/classroom.jpg',
                         width: width,
