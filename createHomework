@@ -1,0 +1,131 @@
+const randomBytes = require('crypto').randomBytes;
+
+const AWS = require('aws-sdk');
+
+const ddb = new AWS.DynamoDB.DocumentClient();
+
+
+
+exports.handler = (event, context, callback) => {
+   
+
+    
+
+    // The body field of the event in a proxy integration is a raw string.
+    // In order to extract meaningful values, we need to first parse this string
+    // into an object. A more robust implementation might inspect the Content-Type
+    // header first and use a different parsing strategy based on that value.
+    const requestBody = JSON.parse(event.body);
+
+const Class_Id  = requestBody.Class_Id;
+const Homework_Attachment  = requestBody.Homework_Attachment;
+const Homework_Creation_Date  = requestBody.Homework_Creation_Date;
+const Homework_Desc  = requestBody.Homework_Desc;
+const Homework_Due_By  = requestBody.Homework_Due_By;
+const Homework_Id  = requestBody.Homework_Id;
+const Homework_Submissions  = requestBody.Homework_Submissions;
+const Homework_Title  = requestBody.Homework_Title;
+const Subject_Id  = requestBody.Subject_Id;
+const Subject_Name  = requestBody.Subject_Name;
+const User_Id  = requestBody.User_Id;
+
+ 
+
+    recordHomework(Class_Id,
+Homework_Attachment,
+Homework_Creation_Date,
+Homework_Desc,
+Homework_Due_By,
+Homework_Id,
+Homework_Submissions,
+Homework_Title,
+Subject_Id,
+Subject_Name,
+User_Id).then(() => {
+        // You can use the callback function to provide a return value from your Node.js
+        // Lambda functions. The first parameter is used for failed invocations. The
+        // second parameter specifies the result data of the invocation.
+
+        // Because this Lambda function is called by an API Gateway proxy integration
+        // the result object must use the following structure.
+        callback(null, {
+            statusCode: 201,
+            body: JSON.stringify({
+                Class_Id:Class_Id,
+Homework_Attachment:Homework_Attachment,
+Homework_Creation_Date:Homework_Creation_Date,
+Homework_Desc:Homework_Desc,
+Homework_Due_By:Homework_Due_By,
+Homework_Id:Homework_Id,
+Homework_Submissions:Homework_Submissions,
+Homework_Title:Homework_Title,
+Subject_Id:Subject_Id,
+Subject_Name:Subject_Name,
+User_Id:User_Id
+            }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+    }).catch((err) => {
+        console.error(err);
+
+        // If there is an error during processing, catch it and return
+        // from the Lambda function successfully. Specify a 500 HTTP status
+        // code and provide an error Student in the body. This will provide a
+        // more meaningful error response to the end client.
+        errorResponse(err.Student, context.awsRequestId, callback)
+    });
+};
+
+
+
+function recordHomework(Class_Id,
+Homework_Attachment,
+Homework_Creation_Date,
+Homework_Desc,
+Homework_Due_By,
+Homework_Id,
+Homework_Submissions,
+Homework_Title,
+Subject_Id,
+Subject_Name,
+User_Id) {
+    return ddb.put({
+        TableName: 'Homework',
+        Item: {
+           Class_Id:Class_Id,
+Homework_Attachment:Homework_Attachment,
+Homework_Creation_Date:Homework_Creation_Date,
+Homework_Desc:Homework_Desc,
+Homework_Due_By:Homework_Due_By,
+Homework_Id:Homework_Id,
+Homework_Submissions:Homework_Submissions,
+Homework_Title:Homework_Title,
+Subject_Id:Subject_Id,
+Subject_Name:Subject_Name,
+User_Id:User_Id,
+            Created_On: new Date().toISOString(),
+        },
+    }).promise();
+}
+
+function toUrlString(buffer) {
+    return buffer.toString('base64')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+}
+
+function errorResponse(errorStudent, awsRequestId, callback) {
+  callback(null, {
+    statusCode: 500,
+    body: JSON.stringify({
+      Error: errorStudent,
+      Reference: awsRequestId,
+    }),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+}

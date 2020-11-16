@@ -1,0 +1,131 @@
+const randomBytes = require('crypto').randomBytes;
+
+const AWS = require('aws-sdk');
+
+const ddb = new AWS.DynamoDB.DocumentClient();
+
+
+
+exports.handler = (event, context, callback) => {
+   
+
+    
+
+    // The body field of the event in a proxy integration is a raw string.
+    // In order to extract meaningful values, we need to first parse this string
+    // into an object. A more robust implementation might inspect the Content-Type
+    // header first and use a different parsing strategy based on that value.
+    const requestBody = JSON.parse(event.body);
+
+    const User_Address  = requestBody.User_Address;
+const User_Category  = requestBody.User_Category;
+const User_Designation  = requestBody.User_Designation;
+const User_Email  = requestBody.User_Email;
+const User_Interaction  = requestBody.User_Interaction;
+const User_Likability  = requestBody.User_Likability;
+const User_Name  = requestBody.User_Name;
+const User_Phone  = requestBody.User_Phone;
+const User_Phone2  = requestBody.User_Phone2;
+const User_Pic  = requestBody.User_Pic;
+const User_Profile  = requestBody.User_Profile;
+
+ 
+
+    recordUser(User_Address,
+                User_Category,
+                User_Designation,
+                User_Email,
+                User_Interaction,
+                User_Likability,
+                User_Name,
+                User_Phone,
+                User_Phone2,
+                User_Pic,
+                User_Profile).then(() => {
+        // You can use the callback function to provide a return value from your Node.js
+        // Lambda functions. The first parameter is used for failed invocations. The
+        // second parameter specifies the result data of the invocation.
+
+        // Because this Lambda function is called by an API Gateway proxy integration
+        // the result object must use the following structure.
+        callback(null, {
+            statusCode: 201,
+            body: JSON.stringify({
+                User_Address:User_Address,
+                User_Category:User_Category,
+                User_Designation:User_Designation,
+                User_Email:User_Email,
+                User_Interaction:User_Interaction,
+                User_Likability:User_Likability,
+                User_Name:User_Name,
+                User_Phone:User_Phone,
+                User_Phone2:User_Phone2,
+                User_Pic:User_Pic,
+                User_Profile:User_Profile
+            }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+    }).catch((err) => {
+        console.error(err);
+
+        // If there is an error during processing, catch it and return
+        // from the Lambda function successfully. Specify a 500 HTTP status
+        // code and provide an error message in the body. This will provide a
+        // more meaningful error response to the end client.
+        errorResponse(err.message, context.awsRequestId, callback)
+    });
+};
+
+
+
+function recordUser(User_Address,
+                    User_Category,
+                    User_Designation,
+                    User_Email,
+                    User_Interaction,
+                    User_Likability,
+                    User_Name,
+                    User_Phone,
+                    User_Phone2,
+                    User_Pic,
+                    User_Profile) {
+    return ddb.put({
+        TableName: 'User',
+        Item: {
+           User_Address:User_Address,
+            User_Category:User_Category,
+            User_Designation:User_Designation,
+            User_Email:User_Email,
+            User_Interaction:User_Interaction,
+            User_Likability:User_Likability,
+            User_Name:User_Name,
+            User_Phone:User_Phone,
+            User_Phone2:User_Phone2,
+            User_Pic:User_Pic,
+            User_Profile:User_Profile,
+            Created_On: new Date().toISOString(),
+        },
+    }).promise();
+}
+
+function toUrlString(buffer) {
+    return buffer.toString('base64')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+}
+
+function errorResponse(errorMessage, awsRequestId, callback) {
+  callback(null, {
+    statusCode: 500,
+    body: JSON.stringify({
+      Error: errorMessage,
+      Reference: awsRequestId,
+    }),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+}

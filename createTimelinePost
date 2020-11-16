@@ -1,0 +1,136 @@
+const randomBytes = require('crypto').randomBytes;
+
+const AWS = require('aws-sdk');
+
+const ddb = new AWS.DynamoDB.DocumentClient();
+
+
+
+exports.handler = (event, context, callback) => {
+   
+
+    
+
+    // The body field of the event in a proxy integration is a raw string.
+    // In order to extract meaningful values, we need to first parse this string
+    // into an object. A more robust implementation might inspect the Content-Type
+    // header first and use a different parsing strategy based on that value.
+    const requestBody = JSON.parse(event.body);
+
+const Class_ID  = requestBody.Class_ID;
+const Comments  = requestBody.Comments;
+const Fees_Id  = requestBody.Fees_Id;
+const Homework_ID  = requestBody.Homework_ID;
+const Likes  = requestBody.Likes;
+const Post_Author  = requestBody.Post_Author;
+const Post_Body  = requestBody.Post_Body;
+const Post_ID  = requestBody.Post_ID;
+const Post_Time  = requestBody.Post_Time;
+const Post_Title  = requestBody.Post_Title;
+const Post_Type  = requestBody.Post_Type;
+const Survey_ID  = requestBody.Survey_ID;
+
+ 
+
+    recordTimelinePost(Class_ID,
+Comments,
+Fees_Id,
+Homework_ID,
+Likes,
+Post_Author,
+Post_Body,
+Post_ID,
+Post_Time,
+Post_Title,
+Post_Type,
+Survey_ID).then(() => {
+        // You can use the callback function to provide a return value from your Node.js
+        // Lambda functions. The first parameter is used for failed invocations. The
+        // second parameter specifies the result data of the invocation.
+
+        // Because this Lambda function is called by an API Gateway proxy integration
+        // the result object must use the following structure.
+        callback(null, {
+            statusCode: 201,
+            body: JSON.stringify({
+                Class_ID:Class_ID,
+Comments:Comments,
+Fees_Id:Fees_Id,
+Homework_ID:Homework_ID,
+Likes:Likes,
+Post_Author:Post_Author,
+Post_Body:Post_Body,
+Post_ID:Post_ID,
+Post_Time:Post_Time,
+Post_Title:Post_Title,
+Post_Type:Post_Type,
+Survey_ID:Survey_ID
+            }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+    }).catch((err) => {
+        console.error(err);
+
+        // If there is an error during processing, catch it and return
+        // from the Lambda function successfully. Specify a 500 HTTP status
+        // code and provide an error Student in the body. This will provide a
+        // more meaningful error response to the end client.
+        errorResponse(err.Student, context.awsRequestId, callback)
+    });
+};
+
+
+
+function recordTimelinePost(Class_ID,
+Comments,
+Fees_Id,
+Homework_ID,
+Likes,
+Post_Author,
+Post_Body,
+Post_ID,
+Post_Time,
+Post_Title,
+Post_Type,
+Survey_ID) {
+    return ddb.put({
+        TableName: 'Timeline_Post',
+        Item: {
+           Class_ID:Class_ID,
+Comments:Comments,
+Fees_Id:Fees_Id,
+Homework_ID:Homework_ID,
+Likes:Likes,
+Post_Author:Post_Author,
+Post_Body:Post_Body,
+Post_ID:Post_ID,
+Post_Time:Post_Time,
+Post_Title:Post_Title,
+Post_Type:Post_Type,
+Survey_ID:Survey_ID,
+            Created_On: new Date().toISOString(),
+        },
+    }).promise();
+}
+
+function toUrlString(buffer) {
+    return buffer.toString('base64')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+}
+
+function errorResponse(errorStudent, awsRequestId, callback) {
+  callback(null, {
+    statusCode: 500,
+    body: JSON.stringify({
+      Error: errorStudent,
+      Reference: awsRequestId,
+    }),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+}

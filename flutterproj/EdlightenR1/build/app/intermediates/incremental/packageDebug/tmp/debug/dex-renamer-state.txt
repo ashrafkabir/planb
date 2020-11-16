@@ -1,0 +1,4 @@
+#Thu Nov 12 22:55:14 PKT 2020
+base.0=/Users/ashrafkabir/Desktop/projects/planb/flutterproj/flutter_complete_guide/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

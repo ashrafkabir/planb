@@ -1,0 +1,126 @@
+const randomBytes = require('crypto').randomBytes;
+
+const AWS = require('aws-sdk');
+
+const ddb = new AWS.DynamoDB.DocumentClient();
+
+
+
+exports.handler = (event, context, callback) => {
+   
+
+    
+
+    // The body field of the event in a proxy integration is a raw string.
+    // In order to extract meaningful values, we need to first parse this string
+    // into an object. A more robust implementation might inspect the Content-Type
+    // header first and use a different parsing strategy based on that value.
+    const requestBody = JSON.parse(event.body);
+
+    const Absence_Date_From  = requestBody.Absence_Date_From;
+const Absence_Date_To  = requestBody.Absence_Date_To;
+const Absence_Id  = requestBody.Absence_Id;
+const Absence_Type  = requestBody.Absence_Type;
+const Absernce_Status  = requestBody.Absernce_Status;
+const Class_Id  = requestBody.Class_Id;
+const Parent_Comments  = requestBody.Parent_Comments;
+const Supporting_Attachment  = requestBody.Supporting_Attachment;
+const Teacher_Comments  = requestBody.Teacher_Comments;
+const User_Id  = requestBody.User_Id;
+
+ 
+
+    recordAbsence(Absence_Date_From,
+Absence_Date_To,
+Absence_Id,
+Absence_Type,
+Absernce_Status,
+Class_Id,
+Parent_Comments,
+Supporting_Attachment,
+Teacher_Comments,
+User_Id).then(() => {
+        // You can use the callback function to provide a return value from your Node.js
+        // Lambda functions. The first parameter is used for failed invocations. The
+        // second parameter specifies the result data of the invocation.
+
+        // Because this Lambda function is called by an API Gateway proxy integration
+        // the result object must use the following structure.
+        callback(null, {
+            statusCode: 201,
+            body: JSON.stringify({
+                Absence_Date_From:Absence_Date_From,
+Absence_Date_To:Absence_Date_To,
+Absence_Id:Absence_Id,
+Absence_Type:Absence_Type,
+Absernce_Status:Absernce_Status,
+Class_Id:Class_Id,
+Parent_Comments:Parent_Comments,
+Supporting_Attachment:Supporting_Attachment,
+Teacher_Comments:Teacher_Comments,
+User_Id:User_Id
+            }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+    }).catch((err) => {
+        console.error(err);
+
+        // If there is an error during processing, catch it and return
+        // from the Lambda function successfully. Specify a 500 HTTP status
+        // code and provide an error message in the body. This will provide a
+        // more meaningful error response to the end client.
+        errorResponse(err.message, context.awsRequestId, callback)
+    });
+};
+
+
+
+function recordAbsence(Absence_Date_From,
+Absence_Date_To,
+Absence_Id,
+Absence_Type,
+Absernce_Status,
+Class_Id,
+Parent_Comments,
+Supporting_Attachment,
+Teacher_Comments,
+User_Id) {
+    return ddb.put({
+        TableName: 'User',
+        Item: {
+           Absence_Date_From:Absence_Date_From,
+Absence_Date_To:Absence_Date_To,
+Absence_Id:Absence_Id,
+Absence_Type:Absence_Type,
+Absernce_Status:Absernce_Status,
+Class_Id:Class_Id,
+Parent_Comments:Parent_Comments,
+Supporting_Attachment:Supporting_Attachment,
+Teacher_Comments:Teacher_Comments,
+User_Id:User_Id,
+            Created_On: new Date().toISOString(),
+        },
+    }).promise();
+}
+
+function toUrlString(buffer) {
+    return buffer.toString('base64')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+}
+
+function errorResponse(errorMessage, awsRequestId, callback) {
+  callback(null, {
+    statusCode: 500,
+    body: JSON.stringify({
+      Error: errorMessage,
+      Reference: awsRequestId,
+    }),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+}

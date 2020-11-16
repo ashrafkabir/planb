@@ -1,0 +1,166 @@
+const randomBytes = require('crypto').randomBytes;
+
+const AWS = require('aws-sdk');
+
+const ddb = new AWS.DynamoDB.DocumentClient();
+
+
+
+exports.handler = (event, context, callback) => {
+   
+
+    
+
+    // The body field of the event in a proxy integration is a raw string.
+    // In order to extract meaningful values, we need to first parse this string
+    // into an object. A more robust implementation might inspect the Content-Type
+    // header first and use a different parsing strategy based on that value.
+    const requestBody = JSON.parse(event.body);
+
+const Class_Id  = requestBody.Class_Id;
+const Student_Address  = requestBody.Student_Address;
+const Student_Email  = requestBody.Student_Email;
+const Student_Id  = requestBody.Student_Id;
+const Student_Interaction  = requestBody.Student_Interaction;
+const Student_Likability  = requestBody.Student_Likability;
+const Student_Term1_Attendance  = requestBody.Student_Term1_Attendance;
+const Student_Term1_Grade  = requestBody.Student_Term1_Grade;
+const Student_Term2_Attendance  = requestBody.Student_Term2_Attendance;
+const Student_Term2_Grade  = requestBody.Student_Term2_Grade;
+const Student_TopScorer_Term1_Freq  = requestBody.Student_TopScorer_Term1_Freq;
+const Student_TopScorer_Term2_Freq  = requestBody.Student_TopScorer_Term2_Freq;
+const Term_Final_Result  = requestBody.Term_Final_Result;
+const User_Name  = requestBody.User_Name;
+const User_Phone  = requestBody.User_Phone;
+const User_Phone2  = requestBody.User_Phone2;
+const User_Pic  = requestBody.User_Pic;
+const User_Profile  = requestBody.User_Profile;
+
+ 
+
+    recordStudent(Class_Id,
+Student_Address,
+Student_Email,
+Student_Id,
+Student_Interaction,
+Student_Likability,
+Student_Term1_Attendance,
+Student_Term1_Grade,
+Student_Term2_Attendance,
+Student_Term2_Grade,
+Student_TopScorer_Term1_Freq,
+Student_TopScorer_Term2_Freq,
+Term_Final_Result,
+User_Name,
+User_Phone,
+User_Phone2,
+User_Pic,
+User_Profile).then(() => {
+        // You can use the callback function to provide a return value from your Node.js
+        // Lambda functions. The first parameter is used for failed invocations. The
+        // second parameter specifies the result data of the invocation.
+
+        // Because this Lambda function is called by an API Gateway proxy integration
+        // the result object must use the following structure.
+        callback(null, {
+            statusCode: 201,
+            body: JSON.stringify({
+                Class_Id:Class_Id,
+Student_Address:Student_Address,
+Student_Email:Student_Email,
+Student_Id:Student_Id,
+Student_Interaction:Student_Interaction,
+Student_Likability:Student_Likability,
+Student_Term1_Attendance:Student_Term1_Attendance,
+Student_Term1_Grade:Student_Term1_Grade,
+Student_Term2_Attendance:Student_Term2_Attendance,
+Student_Term2_Grade:Student_Term2_Grade,
+Student_TopScorer_Term1_Freq:Student_TopScorer_Term1_Freq,
+Student_TopScorer_Term2_Freq:Student_TopScorer_Term2_Freq,
+Term_Final_Result:Term_Final_Result,
+User_Name:User_Name,
+User_Phone:User_Phone,
+User_Phone2:User_Phone2,
+User_Pic:User_Pic,
+User_Profile:User_Profile
+            }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+    }).catch((err) => {
+        console.error(err);
+
+        // If there is an error during processing, catch it and return
+        // from the Lambda function successfully. Specify a 500 HTTP status
+        // code and provide an error Student in the body. This will provide a
+        // more meaningful error response to the end client.
+        errorResponse(err.Student, context.awsRequestId, callback)
+    });
+};
+
+
+
+function recordStudent(Class_Id,
+Student_Address,
+Student_Email,
+Student_Id,
+Student_Interaction,
+Student_Likability,
+Student_Term1_Attendance,
+Student_Term1_Grade,
+Student_Term2_Attendance,
+Student_Term2_Grade,
+Student_TopScorer_Term1_Freq,
+Student_TopScorer_Term2_Freq,
+Term_Final_Result,
+User_Name,
+User_Phone,
+User_Phone2,
+User_Pic,
+User_Profile) {
+    return ddb.put({
+        TableName: 'Student',
+        Item: {
+           Class_Id:Class_Id,
+Student_Address:Student_Address,
+Student_Email:Student_Email,
+Student_Id:Student_Id,
+Student_Interaction:Student_Interaction,
+Student_Likability:Student_Likability,
+Student_Term1_Attendance:Student_Term1_Attendance,
+Student_Term1_Grade:Student_Term1_Grade,
+Student_Term2_Attendance:Student_Term2_Attendance,
+Student_Term2_Grade:Student_Term2_Grade,
+Student_TopScorer_Term1_Freq:Student_TopScorer_Term1_Freq,
+Student_TopScorer_Term2_Freq:Student_TopScorer_Term2_Freq,
+Term_Final_Result:Term_Final_Result,
+User_Name:User_Name,
+User_Phone:User_Phone,
+User_Phone2:User_Phone2,
+User_Pic:User_Pic,
+User_Profile:User_Profile,
+            Created_On: new Date().toISOString(),
+        },
+    }).promise();
+}
+
+function toUrlString(buffer) {
+    return buffer.toString('base64')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+}
+
+function errorResponse(errorStudent, awsRequestId, callback) {
+  callback(null, {
+    statusCode: 500,
+    body: JSON.stringify({
+      Error: errorStudent,
+      Reference: awsRequestId,
+    }),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+}
