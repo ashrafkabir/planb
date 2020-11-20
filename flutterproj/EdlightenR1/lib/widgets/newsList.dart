@@ -69,7 +69,7 @@ class NewsListState extends State<NewsList> {
                               .start, // this aligns the children vertically i.e. the Author and the two texts.
                           children: <Widget>[
                             Text(
-                              timelinePosts[position].Post_Author,
+                              'Hafsa Ali',
                               style: TextStyle(
                                   color: HexToColor(MyConstants.greyClr),
                                   fontWeight: FontWeight.bold,
