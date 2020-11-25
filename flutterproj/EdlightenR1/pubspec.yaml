@@ -37,6 +37,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
     
 
 # For information on the generic Dart part of this file, see the
@@ -58,6 +59,19 @@ flutter:
   assets:
     - assets/
 
+
+fonts:
+    - family: neue bold
+      fonts:
+        - asset: lib/fonts/HelveticaNeuBold.ttf
+    - family: neue
+      fonts:
+        - asset: lib/fonts/Roboto-Light.ttf
+    - family: neue Medium
+      fonts:
+        - asset: lib/fonts/HelveticaNeueMedium.ttf
+
+        
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

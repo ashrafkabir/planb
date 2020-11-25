@@ -60,7 +60,7 @@ class NewsArticle {
   static Resource<List<NewsArticle>> get all {
     return Resource(
         url:
-            'https://xwt1cxb4o3.execute-api.us-east-2.amazonaws.com/EdlightenR1/timeline-posts-v2',
+            'https://sud9zxmd8c.execute-api.us-east-2.amazonaws.com/Test/timelineposts',
         parse: (response) {
           final result = json.decode(response.body);
           Iterable list = result;
