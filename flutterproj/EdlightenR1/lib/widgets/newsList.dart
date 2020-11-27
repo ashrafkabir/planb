@@ -54,10 +54,15 @@ class NewsListState extends State<NewsList> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Image.asset(
-                      'assets/img.png',
-                      width: width / 8,
-                      fit: BoxFit.fill,
+                    Padding(
+                      // this allows a padding around the text.
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width / 20, vertical: height / 100),
+                      child: Image.asset(
+                        'assets/img.png',
+                        width: width / 8,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     SizedBox(
                       width: width / 30,
@@ -99,32 +104,46 @@ class NewsListState extends State<NewsList> {
                       crossAxisAlignment: CrossAxisAlignment
                           .end, // this aligns the children towards the end
                       children: <Widget>[
-                        Icon(
-                          Icons.more_horiz,
-                          color: Colors.grey,
+                        Padding(
+                          // this allows a padding around the text.
+                          padding: EdgeInsets.symmetric(
+                              horizontal: width / 20, vertical: height / 100),
+                          child: Icon(
+                            Icons.more_horiz,
+                            color: Colors.grey,
+                          ),
                         ),
-                        Text(
-                          DateTime.parse(timelinePosts[position].Post_Time)
-                                  .hour
-                                  .toString() +
-                              ' : ' +
-                              DateTime.parse(timelinePosts[position].Post_Time)
-                                  .minute
-                                  .toString() +
-                              ' ' +
-                              DateTime.parse(timelinePosts[position].Post_Time)
-                                  .day
-                                  .toString() +
-                              '/' +
-                              DateTime.parse(timelinePosts[position].Post_Time)
-                                  .month
-                                  .toString() +
-                              '/' +
-                              DateTime.parse(timelinePosts[position].Post_Time)
-                                  .year
-                                  .toString(),
-                          style: TextStyle(
-                              color: Colors.grey, fontSize: width / 30),
+                        Padding(
+                          // this allows a padding around the text.
+                          padding: EdgeInsets.symmetric(
+                              horizontal: width / 20, vertical: height / 100),
+                          child: Text(
+                            DateTime.parse(timelinePosts[position].Post_Time)
+                                    .hour
+                                    .toString() +
+                                ' : ' +
+                                DateTime.parse(
+                                        timelinePosts[position].Post_Time)
+                                    .minute
+                                    .toString() +
+                                ' ' +
+                                DateTime.parse(
+                                        timelinePosts[position].Post_Time)
+                                    .day
+                                    .toString() +
+                                '/' +
+                                DateTime.parse(
+                                        timelinePosts[position].Post_Time)
+                                    .month
+                                    .toString() +
+                                '/' +
+                                DateTime.parse(
+                                        timelinePosts[position].Post_Time)
+                                    .year
+                                    .toString(),
+                            style: TextStyle(
+                                color: Colors.grey, fontSize: width / 30),
+                          ),
                         ),
                       ],
                     )
@@ -134,28 +153,52 @@ class NewsListState extends State<NewsList> {
                   height: height / 100,
                 ), //no need for extra space here.
 
-                Padding(
-                  // this allows a padding around the post image.
-                  padding: EdgeInsets.symmetric(
-                      horizontal: width / 20, vertical: height / 200),
-                  child: Image.asset(
-                    'assets/classroom.jpg',
-                    width: width,
-                    fit: BoxFit.fill,
-                  ),
+                Image.asset(
+                  'assets/classroom.jpg',
+                  width: width,
+                  fit: BoxFit.fill,
                 ),
 
                 Padding(
                   // this allows a padding around the text.
                   padding: EdgeInsets.symmetric(
-                      horizontal: width / 20, vertical: height / 100),
+                      horizontal: width / 50, vertical: height / 100),
                   child: Text(
                     timelinePosts[position].Post_Body,
                     style: TextStyle(color: Colors.grey, fontSize: width / 30),
                   ),
                 ),
+                SizedBox(
+                  height: height / 500,
+                ),
+                Padding(
+                  // this allows a padding around the text.
+                  padding: EdgeInsets.only(right: width / 20),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: DefaultTextStyle(
+                      style: new TextStyle(fontSize: 12.0, color: Colors.grey),
+                      child: Container(
+                        // color: Colors.red,
+                        child: Text(
+                          "10 Comments 54 Likes",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Divider(
+                  color: Colors.grey,
+                  height: 20,
+                  thickness: 1,
+                  endIndent: 0,
+                ),
+                SizedBox(
+                  height: height / 500,
+                ),
                 Container(
-                  height: height / 45, //this button should appear in proportion
+                  height: height / 50, //this button should appear in proportion
+                  color: Colors.grey,
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -212,6 +255,15 @@ class NewsListState extends State<NewsList> {
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: height / 500,
+                ),
+                const Divider(
+                  color: Colors.grey,
+                  height: 20,
+                  thickness: 4,
+                  endIndent: 0,
                 ),
                 SizedBox(
                   height: height / 40,

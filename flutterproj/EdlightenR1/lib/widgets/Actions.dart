@@ -17,9 +17,12 @@ class ActionsState extends State {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: height * 0.14,
+      height: height * 0.14,
+      child: Padding(
+        // this allows a padding around the text.
+        padding: EdgeInsets.symmetric(horizontal: width / 20),
         child: ListView.builder(
-            itemCount: 1,
+            itemCount: 4,
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             physics: ScrollPhysics(),
@@ -120,7 +123,9 @@ class ActionsState extends State {
                   ),
                 ),
               );
-            }));
+            }),
+      ),
+    );
   }
 }
 

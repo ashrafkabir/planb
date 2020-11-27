@@ -130,7 +130,16 @@ class _MyHomePageState extends State<MyHomePage>
             ],
           ),
           body: Column(children: <Widget>[
-            TopActionsBar(),
+            Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: TopActionsBar(),
+            ),
+            const Divider(
+              color: Colors.grey,
+              height: 20,
+              thickness: 5,
+              endIndent: 0,
+            ),
             NewsList(),
           ])),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -192,98 +201,31 @@ class _MyHomePageState extends State<MyHomePage>
         icon: AnimatedIcons.menu_close,
       ),
 
-      /*bottomNavigationBar: BottomNavyBar(
-        selectedIndex: _selectedIndex,
-        showElevation: true, // use this to remove appBar's elevation
-        onItemSelected: (index) => setState(() {
-          _selectedIndex = index;
-          _pageController.animateToPage(index,
-              duration: Duration(milliseconds: 300), curve: Curves.ease);
-        }),
-        items: [
-          BottomNavyBarItem(
-            icon: Icon(Icons.home, size: 30),
-            title: Text('Home'),
-            activeColor: Colors.red,
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.event, size: 30),
-              title: Text('Events'),
-              activeColor: Colors.purpleAccent),
-          BottomNavyBarItem(
-              icon: Icon(Icons.email, size: 30),
-              title: Text('Messages'),
-              activeColor: Colors.pink),
-          BottomNavyBarItem(
-              icon: Icon(Icons.settings, size: 30),
-              title: Text('Settings'),
-              activeColor: Colors.blue),
-        ],
-      ),*/
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         onTap: onTabTapped, // new
         currentIndex:
             _currentIndex, // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            icon: new SvgPicture.asset(
-              'assets/home.svg',
-              color: Colors.grey,
-              height: height / 30,
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/home.svg',
-              color: HexToColor(MyConstants.blueClr),
-              height: height / 25,
-            ),
-            title: new Text(
-              '',
-            ),
+            icon: Icon(Icons.home),
+            //activeIcon: new Icon(Icons.home_outlined),
+            title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: new SvgPicture.asset(
-              'assets/calendar.svg',
-              color: Colors.grey,
-              height: height / 30,
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/calendar.svg',
-              color: HexToColor(MyConstants.blueClr),
-              height: height / 25,
-            ),
-            title: new Text(
-              '',
-            ),
+            icon: Icon(Icons.calendar_today_rounded),
+            //activeIcon: new Icon(Icons.calendar_view_day_outlined),
+            title: Text('Events'),
           ),
           BottomNavigationBarItem(
-            icon: new SvgPicture.asset(
-              'assets/Inbox.svg',
-              color: Colors.grey,
-              height: height / 30,
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/Inbox.svg',
-              color: HexToColor(MyConstants.blueClr),
-              height: height / 25,
-            ),
-            title: new Text(
-              '',
-            ),
+            icon: Icon(Icons.inbox),
+            //activeIcon: new Icon(Icons.inbox_outlined),
+            title: Text('Inbox'),
           ),
           BottomNavigationBarItem(
-            icon: new SvgPicture.asset(
-              'assets/notification.svg',
-              color: Colors.grey,
-              height: height / 30,
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/notification.svg',
-              color: HexToColor(MyConstants.blueClr),
-              height: height / 25,
-            ),
-            title: new Text(
-              '',
-            ),
+            icon: Icon(Icons.notifications_active),
+            //activeIcon: new Icon(Icons.notifications_active_outlined),
+            title: Text('Notifications'),
           ),
         ],
       ),
