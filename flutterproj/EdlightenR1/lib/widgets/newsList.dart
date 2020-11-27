@@ -65,7 +65,7 @@ class NewsListState extends State<NewsList> {
                       ),
                     ),
                     SizedBox(
-                      width: width / 30,
+                      width: width / 20,
                       height: height / 100,
                     ), // this creates space between image and the text
                     Column(
@@ -78,6 +78,7 @@ class NewsListState extends State<NewsList> {
                               color: HexToColor(MyConstants.greyClr),
                               fontWeight: FontWeight.bold,
                               fontSize: width / 22),
+                          overflow: TextOverflow.ellipsis,
                         ),
                         Row(
                           children: <Widget>[
@@ -92,6 +93,7 @@ class NewsListState extends State<NewsList> {
                                   color: Colors.grey,
                                   decoration: TextDecoration.underline,
                                   fontSize: width / 35),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         )
@@ -116,33 +118,31 @@ class NewsListState extends State<NewsList> {
                         Padding(
                           // this allows a padding around the text.
                           padding: EdgeInsets.symmetric(
-                              horizontal: width / 20, vertical: height / 100),
-                          child: Text(
-                            DateTime.parse(timelinePosts[position].Post_Time)
-                                    .hour
-                                    .toString() +
-                                ' : ' +
-                                DateTime.parse(
-                                        timelinePosts[position].Post_Time)
-                                    .minute
-                                    .toString() +
-                                ' ' +
-                                DateTime.parse(
-                                        timelinePosts[position].Post_Time)
-                                    .day
-                                    .toString() +
-                                '/' +
-                                DateTime.parse(
-                                        timelinePosts[position].Post_Time)
-                                    .month
-                                    .toString() +
-                                '/' +
-                                DateTime.parse(
-                                        timelinePosts[position].Post_Time)
-                                    .year
-                                    .toString(),
-                            style: TextStyle(
-                                color: Colors.grey, fontSize: width / 30),
+                              horizontal: width / 50, vertical: height / 100),
+                          child: Expanded(
+                            child: Text(
+                              DateTime.parse(timelinePosts[position].Post_Time)
+                                      .hour
+                                      .toString() +
+                                  ' : ' +
+                                  DateTime.parse(
+                                          timelinePosts[position].Post_Time)
+                                      .minute
+                                      .toString() +
+                                  ' ' +
+                                  DateTime.parse(
+                                          timelinePosts[position].Post_Time)
+                                      .day
+                                      .toString() +
+                                  '/' +
+                                  DateTime.parse(
+                                          timelinePosts[position].Post_Time)
+                                      .month
+                                      .toString(),
+                              style: TextStyle(
+                                  color: Colors.grey, fontSize: width / 30),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ],
@@ -162,10 +162,13 @@ class NewsListState extends State<NewsList> {
                 Padding(
                   // this allows a padding around the text.
                   padding: EdgeInsets.symmetric(
-                      horizontal: width / 50, vertical: height / 100),
-                  child: Text(
-                    timelinePosts[position].Post_Body,
-                    style: TextStyle(color: Colors.grey, fontSize: width / 30),
+                      horizontal: width / 20, vertical: height / 100),
+                  child: Expanded(
+                    child: Text(
+                      timelinePosts[position].Post_Body,
+                      style:
+                          TextStyle(color: Colors.grey, fontSize: width / 30),
+                    ),
                   ),
                 ),
                 SizedBox(
