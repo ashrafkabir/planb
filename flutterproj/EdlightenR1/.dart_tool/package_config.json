@@ -98,6 +98,12 @@
       "languageVersion": "2.10"
     },
     {
+      "name": "flutter_calendar_carousel",
+      "rootUri": "file:///Users/ashrafkabir/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_calendar_carousel-1.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "flutter_html",
       "rootUri": "file:///Users/ashrafkabir/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_html-1.0.2",
       "packageUri": "lib/",
@@ -326,13 +332,13 @@
       "languageVersion": "2.7"
     },
     {
-      "name": "flutter_complete_guide",
+      "name": "EdlightenR1",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-11-26T10:41:37.045671Z",
+  "generated": "2020-11-27T12:28:39.935915Z",
   "generator": "pub",
   "generatorVersion": "2.10.4"
 }

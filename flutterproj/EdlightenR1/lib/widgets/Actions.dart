@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_complete_guide/Constants/MyConstants.dart';
-import 'package:flutter_complete_guide/utils/HexColor.dart';
+import '../Constants/MyConstants.dart';
+import '../utils/HexColor.dart';
 import 'package:flutter/cupertino.dart';
 
 class ActionsState extends State {

@@ -1,4 +1,4 @@
-name: flutter_complete_guide
+name: EdlightenR1
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -38,6 +38,7 @@ dependencies:
   flutter_rounded_date_picker: ^1.0.4
   table_calendar:
   flutter_slidable: ^0.5.5
+  flutter_calendar_carousel: 
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'widgets/newsList.dart';
 import 'utils/HexColor.dart';
+import 'widgets/Home.dart';
+import 'widgets/CalendarTab.dart';
 import 'Constants/MyConstants.dart';
 import 'package:flutter/services.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
@@ -61,6 +63,13 @@ class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
   int _currentIndex = 0;
+  final List<Widget> _children = [
+    Home(),
+    CalenderTab(),
+    Home(),
+    Home(),
+  ];
+
   PageController _pageController;
   Animation<double>
       _animation; //create animation controller for the Plus button animation
@@ -102,7 +111,8 @@ class _MyHomePageState extends State<MyHomePage>
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: Scaffold(
+      body: _children[_currentIndex],
+      /*Scaffold(
           appBar: AppBar(
             title: Text('Timeline'),
             leading: GestureDetector(
@@ -199,7 +209,7 @@ class _MyHomePageState extends State<MyHomePage>
 
         // Flaoting Action button Icon
         icon: AnimatedIcons.menu_close,
-      ),
+      ),*/
 
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
