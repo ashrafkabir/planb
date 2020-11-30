@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="89.24" height="76.955" viewBox="0 0 89.24 76.955">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #848484;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <g id="Home" transform="translate(-200.88 -916.5)">
+    <g id="home-2" data-name="home" transform="translate(223 918)">
+      <path id="Path_6" data-name="Path 6" class="cls-1" d="M2,35.746,34.5,1,67,35.746" transform="translate(-2 -1)"/>
+      <path id="Path_7" data-name="Path 7" class="cls-1" d="M58.365,25V59.746H40.91V34.476H22v25.27H6V25" transform="translate(0.317 8.209)"/>
+    </g>
+    <g id="home-3" data-name="home" transform="translate(203 924)">
+      <path id="Path_6-2" data-name="Path 6" class="cls-1" d="M2,35.746,34.5,1,67,35.746" transform="translate(-2 -1)"/>
+      <path id="Path_7-2" data-name="Path 7" class="cls-1" d="M58.365,25V59.746H40.91V34.476H22v25.27H6V25" transform="translate(0.317 8.209)"/>
+    </g>
+  </g>
+</svg>

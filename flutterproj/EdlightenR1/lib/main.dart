@@ -3,6 +3,8 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'widgets/newsList.dart';
 import 'utils/HexColor.dart';
 import 'widgets/Home.dart';
+import 'widgets/Inbox.dart';
+import 'widgets/Notifications.dart';
 import 'widgets/CalendarTab.dart';
 import 'Constants/MyConstants.dart';
 import 'package:flutter/services.dart';
@@ -66,8 +68,8 @@ class _MyHomePageState extends State<MyHomePage>
   final List<Widget> _children = [
     Home(),
     CalenderTab(),
-    Home(),
-    Home(),
+    InboxTab(),
+    NotificationTab(),
   ];
 
   PageController _pageController;
