@@ -43,6 +43,7 @@ class _CalenderState extends State<CalenderTab> with TickerProviderStateMixin {
   List<Event> _selectedEvents = List<Event>();
   AnimationController _animationController;
   CalendarController _calendarController;
+
   var _selectedDay = DateTime.now();
 
   @override
@@ -72,7 +73,13 @@ class _CalenderState extends State<CalenderTab> with TickerProviderStateMixin {
     print('CALLBACK: _onpopulateEvents');
 
     devents.forEach((element) {
-      _events[DateTime.parse(element.Event_From_Date)] = [element];
+      if (_events[DateTime.parse(element.Event_From_Date)] == null) {
+        _events[DateTime.parse(element.Event_From_Date)] = [element];
+      } else {
+        List<Event> levents = _events[DateTime.parse(element.Event_From_Date)];
+        levents.add(element);
+        _events[DateTime.parse(element.Event_From_Date)] = levents;
+      }
     });
     _selectedEvents = devents;
 
@@ -172,9 +179,7 @@ class _CalenderState extends State<CalenderTab> with TickerProviderStateMixin {
       },
       calendarStyle: CalendarStyle(
         selectedColor: HexToColor(MyConstants.yellowClr),
-        todayColor: HexToColor(MyConstants.blueClr),
         markersColor: HexToColor(MyConstants.greyClr),
-        highlightToday: true,
         outsideDaysVisible: true,
       ),
       headerStyle: HeaderStyle(
