@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:io';
 
 import '../Constants/MyConstants.dart';
@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 class InboxTab extends StatefulWidget {
   final String currentUserId;
 
-  InboxTab({Key key, @required this.currentUserId}) : super(key: key);
+  InboxTab({Key key, this.currentUserId}) : super(key: key);
 
   @override
   State createState() => _InboxState(currentUserId: currentUserId);
 }
 
 class _InboxState extends State<InboxTab> {
-  _InboxState({Key key, @required this.currentUserId});
+  _InboxState({Key key, this.currentUserId});
 
   final String currentUserId;
 //  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
