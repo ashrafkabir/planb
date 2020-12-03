@@ -98,7 +98,9 @@ class _CalenderState extends State<CalenderTab> with TickerProviderStateMixin {
   void _onVisibleDaysChanged(
       DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onVisibleDaysChanged');
-    _selectedDay = last.subtract(new Duration(days: 14));
+    _selectedDay = last.subtract(new Duration(
+        days:
+            14)); //to adjust for dates from other months flowing into this month's calendar
 
     setState(() {
       _selectedEvents = devents
